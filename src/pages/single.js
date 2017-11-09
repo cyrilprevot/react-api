@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios'
 import { Row, Col, ProgressBar, Icon, Navbar, Button, Card, CardTitle } from 'react-materialize'
+
+import ApiService from '../services/apiService'
 
 import Error from '../components/error'
 import Footer from '../components/footer'
@@ -9,7 +10,6 @@ import Footer from '../components/footer'
 import Image from '../img/pontchaban.jpg'
 import Logo from '../img/logo.jpg'
 
-import { URL } from '../constants'
 
 class SinglePage extends Component {
 
@@ -31,10 +31,10 @@ class SinglePage extends Component {
     }
 
     loadItem = () => {
-    	axios.get(`${URL}/${this.props.match.params.id}`).then(response => {
-            this.setState({item: response.data.item, error: null})
+    	ApiService.get(this.props.match.params.id).then(response => {
+            this.setState({item: response.item, error: null})
         }).catch(error => {
-            this.setState({error: error.response})
+            this.setState({error})
         })
     }
 

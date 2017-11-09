@@ -3,12 +3,12 @@ import axios from 'axios'
 import List from './../components/list';
 import { Row, Col, ProgressBar, Navbar } from 'react-materialize'
 
+import ApiService from '../services/apiService'
+
 import Search from '../components/search'
 import Error from '../components/error'
 
 import Logo from '../img/logo.jpg'
-
-import { URL } from '../constants'
 
 class HomePage extends Component {
 
@@ -23,24 +23,21 @@ class HomePage extends Component {
 
     componentWillMount = () => {
         this.setState({list: null, error: null})
-        axios.get(`${URL}`).then(response => {
-            this.setState({list: response.data, error: null})
+        ApiService.getAll().then(response => {
+            this.setState({list: response, error: null})
         }).catch(error => {
-            this.setState({error: error.response})
+            this.setState({error})
         })
     }
 
     search = (from, to) => {
         this.setState({list: null, error: null})
-        axios.get(`${URL}?from=${this.parseDate(from)}&to=${this.parseDate(to)}`).then(response => {
-            this.setState({list: response.data})
+        
+        ApiService.search(from, to).then(response => {
+            this.setState({list: response})
         }).catch(error => {
-            this.setState({error: error.response})
+            this.setState({error})
         })
-    }
-
-    parseDate = (date) => {
-        return (date.replace(/\//g, "-"))
     }
 
 
