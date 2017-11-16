@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, ProgressBar, Icon, Navbar, Button, Card, CardTitle } from 'react-materialize'
+import { Link } from 'react-router-dom'
 
 import ApiService from '../services/apiService'
 
@@ -32,7 +33,7 @@ class SinglePage extends Component {
 
     loadItem = () => {
     	ApiService.get(this.props.match.params.id).then(response => {
-            this.setState({item: response.item, error: null})
+            this.setState({item: response, error: null})
         }).catch(error => {
             this.setState({error})
         })
@@ -64,15 +65,15 @@ class SinglePage extends Component {
 										s={4}
 										className="right-align"
 									>
-										<Button 
-											waves='light' 
-											node='a' 
-											href={`${item.id - 1}`}
-											disabled={item.id === 1}
-										>
-											<Icon left>keyboard_arrow_left</Icon> 
-											Précédent
-										</Button>
+										<Link to={`${item.id - 1}`}>
+											<Button 
+												waves='light' 
+												disabled={item.id === 1}
+											>
+												<Icon left>keyboard_arrow_left</Icon> 
+												Précédent
+											</Button>
+										</Link>
 									</Col>
 									<Col s={4} className="center-align">
 										<Card
@@ -89,14 +90,12 @@ class SinglePage extends Component {
 										s={4} 
 										className="left-align"
 									>
-										<Button 
-											waves='light' 
-											node='a' 
-											href={`${item.id + 1}`}
-										>
-											<Icon right>keyboard_arrow_right</Icon> 
-											Suivant
-										</Button>
+										<Link to={`${item.id + 1}`}>
+											<Button waves='light'>
+												<Icon right>keyboard_arrow_right</Icon> 
+												Suivant
+											</Button>
+										</Link>
 									</Col>
 								</Row>
 							</div>

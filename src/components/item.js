@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {CollectionItem} from 'react-materialize'
+import { Link } from 'react-router-dom'
 
 import PropTypes from 'prop-types'
 
@@ -17,8 +18,10 @@ export default class Item extends Component {
 
     render() {
         return (
-            <CollectionItem href={`${this.props.id}`}>
-            	{this.props.date} à {this.props.start}
+            <CollectionItem>
+            	<Link to={`${this.props.id}`}>
+            		{this.props.date} à {this.props.start}
+           		</Link>
             </CollectionItem>
         );
     }
